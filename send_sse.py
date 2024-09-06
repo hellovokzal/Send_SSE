@@ -10,7 +10,7 @@ except:
 app = Flask(__name__)
 
 def generate_events():
-    time.sleep(0.05)
+    time.sleep(0.01)
     num = 0
     """Генерация событий в реальном времени."""
     while True:
