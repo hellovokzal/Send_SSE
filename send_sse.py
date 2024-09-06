@@ -1,12 +1,10 @@
-try:
-  from flask import Flask, Response, render_template
-  import time
-  import os
-except:
-  from os import *
-  system("pip install flask")
-  from flask import Flask, Response, render_template
-  import time
+from flask import Flask, Response, render_template
+import time
+import os
+
+# Создаем директорию hhh, если ее не существует
+if not os.path.exists("hhh"):
+    os.mkdir("hhh")
 
 app = Flask(__name__)
 
@@ -22,11 +20,26 @@ def generate_events():
 @app.route('/')
 def index():
     """Главная страница приложения."""
-    try:
-        with open("index.html", "r") as fl:
-            return str(fl.read())
-    except FileNotFoundError:
-        return "Ошибка: файл index.html не найден.", 404
+    return """<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Getting server updates</h1>
+<div id="result"></div>
+
+<script>
+if(typeof(EventSource) !== "undefined") {
+  var source = new EventSource("stream");
+  source.onmessage = function(event) {
+    document.getElementById("result").innerHTML = event.data;
+  };
+} else {
+  document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+}
+</script>
+
+</body>
+</html>"""
 
 @app.route('/stream')
 def stream():
