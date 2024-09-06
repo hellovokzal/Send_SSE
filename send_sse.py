@@ -1,11 +1,12 @@
-from flask import Flask, Response, render_template
-import time
-import os
-
-# Создаем директорию hhh, если ее не существует
-if not os.path.exists("hhh"):
-    os.mkdir("hhh")
-
+try:
+    from flask import Flask, Response, render_template
+    import time
+    import os
+except:
+    from os import *
+    system("pip install flask")
+    from flask import Flask, Response, render_template
+    import time
 app = Flask(__name__)
 
 def generate_events():
